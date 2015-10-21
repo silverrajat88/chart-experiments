@@ -1,0 +1,173 @@
+<html>
+
+<head>
+    <title>My Hem Experiments!</title>
+    <link rel="stylesheet" href="./stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <script src="./scripts/vendor/jquery.min.js"></script>
+    <script src="./scripts/vendor/underscore.js"></script>
+    <script src="./scripts/vendor/bootstrap.js"></script>
+    <script src="./scripts/vendor/angular.js"></script>
+    <script src="./scripts/vendor/angular-route.js"></script>
+    <script src="./scripts/app.js"></script>
+    <script src="./scripts/services/myService.js"></script>
+    <script src="./scripts/controllers/mainController.js"></script>
+</head>
+
+<body ng-app="myapp">
+    <div class="container-fluid" ng-controller="mainController">
+        <div class="customiation-tool">
+            <div class="preview-container col-lg-4 padding-off box-shadow">
+                <div class="title">
+                    <h4 style="display:inline-block;">{{selectedTile.display_name.en}}</h4>
+                    <div class="material-strength pull-right hidden-lg hidden-xs hidden-sm" style="display:inline-block;margin:10px 0px;">
+                        <span class="strength_text"><strong>Material Strength:</strong></span>
+                        <div class="pull-right" style="margin-right:10px;">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-container">
+                    <div id="myCarousel" class="carousel slide" ng-class="{'show-color':selectedTile.identifier=='hem_selected_color'}" style="margin-bottom:10px;" data-interval=false data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <div class="carousel-img-container" ng-style="{'background-color':getCoatingColor(selectedTile)}">
+                                    <img ng-src='https://d1w8j6pmwcehqo.cloudfront.net/assets-staging/images/custom/material/material-{{selectedTile.piv}}-512x512-primary.png' alt="primary">
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="carousel-img-container" ng-style="{'background-color':getCoatingColor(selectedTile)}">
+                                    <img ng-src='https://d1w8j6pmwcehqo.cloudfront.net/assets-staging/images/custom/material/material-{{selectedTile.piv}}-512x512-primary.png' alt="secondary">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="description">
+                    <h5 class="hidden-xs">{{selectedTile.display_name.en}}</h5>
+                    <p ng-bind="getSelectedItemDescription()"></p>
+                </div>
+                <div class="material-strength hidden-md" style="padding-bottom:20px;">
+                    <span class="strength_text"><strong>Material Strength:</strong></span>
+                    <div class="pull-right" style="margin-right:10px;">
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="customization-container col-lg-8 padding-off box-shadow">
+                <div class="title ">
+                    <h4>Select your swatch samples here.</h4>
+                </div>
+                <div class="category-container" style="width:100%">
+                    <!-- Nav tabs -->
+                    <div class="row tab-row">
+                        <ul class="nav nav-tabs col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1" role="tablist">
+                            <li role="presentation" class="active col-xs-4 padding-off"><a href="#solidwood" aria-controls="solidwood" role="tab" data-toggle="tab">Solid Wood</a></li>
+                            <li role="presentation" class="col-xs-4 padding-off"><a href="#mdfveener" aria-controls="mdfveener" role="tab" data-toggle="tab">MDF<span class="hidden-xs">with veener</span></a></li>
+                            <li role="presentation" class="col-xs-4 padding-off"><a href="#hemselectedcolors" aria-controls="hemselectedcolors" role="tab" data-toggle="tab">Colors</a></li>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <!-- Tab panes -->
+                        <div class="tab-content" style="width:100%; float:left;">
+                            <div role="tabpanel" class="tab-pane row active" id="solidwood">
+                                <div class="category-heading">
+                                    <h5><span>Premium Solid Wood</span><span class="round" data-toggle="tooltip" data-placement="right" title="Our Premium European Solid Woods are the most resilient of all, allowing for beautifully crafted pieces that not only fit your home, but also last for generations. The natural structure of the wood provides much-needed strength to edges, legs and other supporting components – perfect for very wide sections and great depths – and the wood’s natural grain guarantees that each piece of furniture is truly one of a kind.">i</span></h5>
+                                </div>
+                                <ul class="material-coating-list clearfix padding-off">
+                                    <li ng-repeat="item in solidWoodMaterialCoatings">
+                                        <div class="image-holder" ng-click="selectTile(item)" ng-class="{ 'selected':isSelected(item) }">
+                                            <div ng-style="{'background-image':'url(https://d1w8j6pmwcehqo.cloudfront.net/assets-staging/images/custom/material/material-{{item.piv}}-512x512-primary.png)'}" class="image-tile"></div>
+                                            <div class="material-mask">
+                                                <div class="material-inner-mask"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-holder">{{item.display_name.en}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div role="tabpanel" class="tab-pane row" id="mdfveener">
+                                <div class="category-heading">
+                                    <h5><span>MDF</span><span class="round" data-toggle="tooltip" data-placement="right" title="Our genuine wood veneers are available in various finishes. Our oils and lacquers are environmentally friendly and chosen to suit the wood type.">i</span></h5>
+                                </div>
+                                <ul class="material-coating-list clearfix padding-off">
+                                    <li ng-repeat="item in mdfWithVeenerMaterialCoatings">
+                                        <div class="image-holder" ng-click="selectTile(item)" ng-class="{ 'selected':isSelected(item) }">
+                                            <div ng-style="{'background-image':'url(https://d1w8j6pmwcehqo.cloudfront.net/assets-staging/images/custom/material/material-{{item.piv}}-512x512-primary.png)'}" class="image-tile"></div>
+                                            <div class="material-mask">
+                                                <div class="material-inner-mask"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-holder">{{item.display_name.en}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div role="tabpanel" class="tab-pane row" id="hemselectedcolors">
+                                <div class="category-heading">
+                                    <h5><span>Hem Selected Colors</span><span class="round" data-toggle="tooltip" data-placement="right" title="Select either a Hem Selected Colour or a custom colour (additional cost, knowledge of RAL colour codes required). MDF: plain lacquer, solid wood; wood grain may come through.">i</span></h5>
+                                </div>
+                                <div class="dropdown-container">
+                                    <div class="dropdown-label"><strong>Material</strong></div>
+                                    <select name="mySelect" id="mySelect" class="form-control" ng-options="option.material_name.en for option in dropdownOptions" ng-model="myModel.selectedDropdownItem">
+                                    </select>
+                                </div>
+                                <ul class="material-coating-list clearfix padding-off">
+                                    <li ng-repeat="item in hemColorsMaterialCoatings">
+                                        <div class="image-holder" ng-click="selectTile(item)" ng-class="{ 'selected':isSelected(item) }">
+                                            <div ng-style="{'background-color':getCoatingColor(item)}" class="image-tile"></div>
+                                            <div class="material-mask">
+                                                <div class="material-inner-mask"></div>
+                                            </div>
+                                        </div>
+                                        <div class="text-holder">{{item.display_name.en}}</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-to-cart-footer row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div>
+                            <span id="price-tag"><strong>$ {{myModel.randomPrice}}</strong></span>
+                            <span class="round" style="vertical-align:baseline;" data-toggle="tooltip" data-placement="right" title="Incl. VAT charges for delivery into the room of your choice will be calculated at checkout.">i</span>
+                        </div>
+                        <div class="price-description">
+                            <span>This Product ships free</span>
+                            <br>
+                            <span>Ready to Ship and will deliver by:21Oct-23Oct</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6" style="text-align:center">
+                        <button class="btn btn-primary btn-cart btn-black">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
