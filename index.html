@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>My Graphin Experiments!</title>
+   
+    <link rel="stylesheet" href="./public/stylesheets/style.css">
+	 
+    <script src="./public/scripts/vendor/jquery.min.js"></script>
+    <script src="./public/scripts/vendor/underscore.js"></script>
+    <script src="./public/scripts/vendor/angular.js"></script>    
+    <script src="./public/scripts/vendor/d3.js"></script>  
+    <script src="./public/scripts/vendor/d3-tip.js"></script>  
+    <script src="./public/scripts/vendor/angular-route.js"></script>
+
+    <script src="./public/scripts/directives/mychart-directive.js"></script>
+    <script src="./public/scripts/app.js"></script>
+    <script src="./public/scripts/controllers/graphController.js"></script>
+
+  </head>
+
+  <body ng-app="myapp">
+  <div class="container" ng-controller="graphController" style="height:400px; width:100%;">
+        <mychart data="realData3" options="options"></mychart>
+  </div>
+  </body>
+</html>

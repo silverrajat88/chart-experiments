@@ -1,0 +1,58 @@
+body {
+  font: 10px sans-serif;
+}
+
+.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.plotting-area {
+  fill: rgba(236, 236, 236, 0.72);
+}
+
+.bar:hover {
+  opacity: 0.8;
+}
+
+.ohlc-series path {
+  vector-effect: non-scaling-stroke;
+  stroke-width: 3;
+  stroke: #f5c25f;
+}
+
+
+/*css for tooltip used in mychart directive*/
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+.d3-tip.n:after {
+  margin: -1px 0 0;
+  top: 100%;
+  left: 0;
+}
